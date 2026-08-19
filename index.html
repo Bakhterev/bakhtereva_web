@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
     <style>
-        /* ===== RESET & БАЗОВЫЕ СТИЛИ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +36,6 @@
             padding: 0 20px;
         }
 
-        /* ===== ПЕРЕМЕННЫЕ ===== */
         :root {
             --primary-dark: #1A3B5C;
             --primary-blue: #4A90E2;
@@ -51,7 +49,6 @@
             --transition: 0.3s ease;
         }
 
-        /* ===== КНОПКИ ===== */
         .btn-primary {
             display: inline-block;
             background: var(--primary-blue);
@@ -116,7 +113,6 @@
             color: #fff;
         }
 
-        /* ===== HEADER ===== */
         .header {
             height: 80px;
             background: var(--white);
@@ -181,7 +177,6 @@
             transition: var(--transition);
         }
 
-        /* ===== HERO ===== */
         .hero {
             min-height: 600px;
             background: linear-gradient(135deg, #F0F4F8 0%, #FFFFFF 100%);
@@ -250,7 +245,6 @@
             object-fit: cover;
         }
 
-        /* ===== ОБЩИЕ СЕКЦИИ ===== */
         section {
             padding: 70px 0;
         }
@@ -265,7 +259,6 @@
             text-align: center;
         }
 
-        /* ===== ABOUT ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -300,7 +293,6 @@
             font-weight: 700;
         }
 
-        /* ===== EDUCATION ===== */
         .bg-light {
             background: var(--bg-light);
         }
@@ -342,7 +334,6 @@
             margin-top: 4px;
         }
 
-        /* ===== COMPETENCIES ===== */
         .comp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -362,7 +353,6 @@
             font-size: 24px;
         }
 
-        /* ===== ADVANTAGES (НОВЫЙ БЛОК) ===== */
         .advantages-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -397,7 +387,6 @@
             line-height: 1.6;
         }
 
-        /* ===== FAQ ===== */
         .faq-list {
             max-width: 800px;
             margin: 0 auto;
@@ -441,7 +430,6 @@
             transform: rotate(45deg);
         }
 
-        /* ===== БЛОГ (КАРТОЧКИ) ===== */
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -485,7 +473,6 @@
             padding: 6px 20px;
         }
 
-        /* ===== CONTACTS ===== */
         .contacts-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -524,7 +511,6 @@
             border-radius: var(--radius);
         }
 
-        /* ===== CTA ===== */
         .cta-section {
             background: var(--primary-dark);
             padding: 80px 0;
@@ -545,7 +531,6 @@
             margin-right: auto;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             background: #1A2B3C;
             color: #a0b8cc;
@@ -554,7 +539,6 @@
             font-size: 16px;
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО (ОБЩЕЕ) ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -571,7 +555,7 @@
         .modal {
             background: var(--white);
             border-radius: var(--radius);
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
             padding: 40px 32px 32px;
             position: relative;
@@ -598,72 +582,11 @@
             color: var(--primary-dark);
             margin-bottom: 8px;
         }
-        .modal .meta {
-            font-size: 14px;
+        .modal p {
             color: var(--text-gray);
             margin-bottom: 20px;
         }
-        .modal .article-body {
-            font-size: 17px;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-        .modal .article-body p {
-            margin-bottom: 16px;
-        }
-        .modal .article-body strong {
-            color: var(--primary-dark);
-        }
 
-        /* ===== МОДАЛЬНОЕ ОКНО (ФОРМА) ===== */
-        .form-group {
-            margin-bottom: 18px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 16px;
-            margin-bottom: 4px;
-            color: var(--text-dark);
-        }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
-            transition: border var(--transition);
-        }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        .form-submit {
-            width: 100%;
-            padding: 14px;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        .form-error {
-            color: #E53E3E;
-            font-size: 14px;
-            margin-top: 4px;
-            display: none;
-        }
-        .form-error.visible {
-            display: block;
-        }
-
-        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 1024px) {
             .hero-content h1 {
                 font-size: 36px;
@@ -747,6 +670,9 @@
             .modal {
                 padding: 32px 20px;
             }
+            .calendly-inline-widget {
+                height: 600px !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -772,11 +698,13 @@
             .logo span {
                 font-size: 11px;
             }
+            .calendly-inline-widget {
+                height: 500px !important;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -799,7 +727,6 @@
         </div>
     </header>
 
-    <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="container hero-grid">
             <div class="hero-content">
@@ -816,7 +743,6 @@
         </div>
     </section>
 
-    <!-- ===== ABOUT ===== -->
     <section id="about">
         <div class="container">
             <h2 class="section-title">Опыт, подтверждённый наукой и практикой</h2>
@@ -836,7 +762,6 @@
         </div>
     </section>
 
-    <!-- ===== ADVANTAGES (НОВЫЙ БЛОК) ===== -->
     <section id="advantages" class="bg-light">
         <div class="container">
             <h2 class="section-title centered">Почему выбирают меня</h2>
@@ -865,7 +790,6 @@
         </div>
     </section>
 
-    <!-- ===== EDUCATION ===== -->
     <section id="education">
         <div class="container">
             <h2 class="section-title centered">Образование и сертификаты</h2>
@@ -916,7 +840,6 @@
         </div>
     </section>
 
-    <!-- ===== COMPETENCIES ===== -->
     <section id="competencies" class="bg-light">
         <div class="container">
             <h2 class="section-title centered">Специализируюсь на диагностике и лечении</h2>
@@ -931,17 +854,13 @@
         </div>
     </section>
 
-    <!-- ===== BLOG ===== -->
     <section id="blog">
         <div class="container">
             <h2 class="section-title centered">Полезные статьи о здоровье</h2>
-            <div class="blog-grid" id="blogGrid">
-                <!-- Карточки вставляются скриптом -->
-            </div>
+            <div class="blog-grid" id="blogGrid"></div>
         </div>
     </section>
 
-    <!-- ===== FAQ ===== -->
     <section id="faq" class="bg-light">
         <div class="container">
             <h2 class="section-title centered">Часто задаваемые вопросы</h2>
@@ -971,7 +890,6 @@
         </div>
     </section>
 
-    <!-- ===== CONTACTS ===== -->
     <section id="contacts">
         <div class="container">
             <h2 class="section-title centered">Контакты</h2>
@@ -989,7 +907,6 @@
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
     <section id="cta" class="cta-section">
         <div class="container">
             <h2>Запишитесь на консультацию уже сегодня</h2>
@@ -998,14 +915,12 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             © 2026 Бахтерева Елена Владимировна. Все права защищены.
         </div>
     </footer>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ СТАТЬИ ===== -->
     <div class="modal-overlay" id="articleModal">
         <div class="modal">
             <button class="modal-close" id="articleModalClose">&times;</button>
@@ -1017,50 +932,20 @@
         </div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Запись на приём</h2>
-            <p>Заполните форму, и я свяжусь с вами для уточнения времени.</p>
-            
-            <!-- ★★★★★ ИЗМЕНЁННАЯ ФОРМА ★★★★★ -->
-            <form id="appointmentForm" 
-                  action="https://formsubmit.co/serg.bakhterev@gmail.com"
-                  method="POST">
-                
-                <!-- Скрытые поля для FormSubmit -->
-                <input type="hidden" name="_subject" value="Новая заявка с сайта Бахтеревой Е.В.">
-                <input type="hidden" name="_captcha" value="false"> <!-- отключаем капчу -->
-                <!-- Можно добавить _next для редиректа после отправки -->
-                <!-- <input type="hidden" name="_next" value="https://ваш-сайт.рф/spasibo.html"> -->
-                
-                <div class="form-group">
-                    <label for="name">Ваше имя *</label>
-                    <input type="text" id="name" name="name" placeholder="Иванов Иван Иванович" required />
-                    <div class="form-error" id="nameError">Пожалуйста, укажите ваше имя.</div>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Телефон *</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+7 (900) 123-45-67" required />
-                    <div class="form-error" id="phoneError">Введите корректный номер телефона (не менее 10 цифр).</div>
-                </div>
-                <div class="form-group">
-                    <label for="time">Удобное время для визита</label>
-                    <input type="text" id="time" name="time" placeholder="Например, после 14:00" />
-                </div>
-                <div class="form-group">
-                    <label for="comment">Комментарий</label>
-                    <textarea id="comment" name="comment" placeholder="Кратко опишите вашу проблему или пожелания"></textarea>
-                </div>
-                <button type="submit" class="btn-primary form-submit">Отправить заявку</button>
-            </form>
+            <p>Выберите удобную дату и время, затем заполните контактные данные в форме записи.</p>
+            <div class="calendly-inline-widget" 
+                 data-url="https://calendly.com/serg-bakhterev/new-meeting?hide_landing_page_details=1&hide_gdpr_banner=1"
+                 style="min-width:320px;height:700px;">
+            </div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
     </div>
 
-    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== ДАННЫЕ СТАТЕЙ =====
         const articles = [{
             id: 1,
             title: 'Почему болит голова по утрам?',
@@ -1110,7 +995,6 @@
             `
         }];
 
-        // ===== ОТРИСОВКА КАРТОЧЕК БЛОГА =====
         const blogGrid = document.getElementById('blogGrid');
 
         function renderBlog() {
@@ -1131,7 +1015,6 @@
         }
         renderBlog();
 
-        // ===== МОДАЛЬНОЕ ОКНО ДЛЯ СТАТЬИ =====
         const articleModal = document.getElementById('articleModal');
         const articleModalClose = document.getElementById('articleModalClose');
         const articleTitle = document.getElementById('articleTitle');
@@ -1170,7 +1053,6 @@
             }
         });
 
-        // ===== БУРГЕР-МЕНЮ =====
         const burger = document.getElementById('burgerBtn');
         const nav = document.getElementById('mainNav');
         burger.addEventListener('click', () => {
@@ -1182,7 +1064,6 @@
             });
         });
 
-        // ===== FAQ =====
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
@@ -1191,7 +1072,6 @@
             });
         });
 
-        // ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ =====
         const modalOverlay = document.getElementById('modalOverlay');
         const modalClose = document.getElementById('modalClose');
         const openModalBtns = document.querySelectorAll('.open-modal-btn');
@@ -1204,7 +1084,6 @@
         function closeModal() {
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            document.querySelectorAll('.form-error').forEach(el => el.classList.remove('visible'));
         }
 
         openModalBtns.forEach(btn => {
@@ -1223,43 +1102,6 @@
                 closeModal();
             }
         });
-
-        // ===== ОБРАБОТКА ФОРМЫ =====
-        const form = document.getElementById('appointmentForm');
-        const nameInput = document.getElementById('name');
-        const phoneInput = document.getElementById('phone');
-        const nameError = document.getElementById('nameError');
-        const phoneError = document.getElementById('phoneError');
-
-        form.addEventListener('submit', function(e) {
-            // Сброс ошибок
-            nameError.classList.remove('visible');
-            phoneError.classList.remove('visible');
-
-            let isValid = true;
-
-            // Проверка имени
-            if (!nameInput.value.trim()) {
-                nameError.classList.add('visible');
-                isValid = false;
-            }
-
-            // Проверка телефона (минимум 10 цифр)
-            const phoneDigits = phoneInput.value.replace(/\D/g, '');
-            if (phoneDigits.length < 10) {
-                phoneError.classList.add('visible');
-                isValid = false;
-            }
-
-            // Если есть ошибки — предотвращаем отправку
-            if (!isValid) {
-                e.preventDefault();
-            }
-            // Если всё ок — форма отправится сама на FormSubmit
-        });
-
-        nameInput.addEventListener('input', () => nameError.classList.remove('visible'));
-        phoneInput.addEventListener('input', () => phoneError.classList.remove('visible'));
     </script>
 </body>
 </html>
