@@ -474,6 +474,137 @@
             padding: 6px 20px;
         }
 
+        /* ===== ОТЗЫВЫ (аккордеон) ===== */
+        .reviews-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .review-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: box-shadow var(--transition);
+            border: 1px solid #f0f4f8;
+        }
+        .review-item:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: background var(--transition);
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .review-header:hover {
+            background: #f8fafc;
+        }
+        .review-header .review-user {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), #6BA3E8);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.25);
+        }
+        .review-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        .review-date {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        .review-stars {
+            color: #F6AD55;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+        .review-toggle {
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--primary-blue);
+            transition: transform var(--transition);
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        .review-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 24px;
+        }
+        .review-item.active .review-body {
+            max-height: 500px;
+            padding: 0 24px 24px 24px;
+        }
+        .review-item.active .review-toggle {
+            transform: rotate(45deg);
+        }
+        .review-text {
+            font-size: 16px;
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            font-style: italic;
+            position: relative;
+        }
+        .review-text::before {
+            content: "«";
+            font-size: 30px;
+            color: var(--primary-blue);
+            font-family: Georgia, serif;
+            position: absolute;
+            left: 8px;
+            top: 0;
+            opacity: 0.25;
+        }
+        .review-text::after {
+            content: "»";
+            font-size: 30px;
+            color: var(--primary-blue);
+            font-family: Georgia, serif;
+            position: absolute;
+            right: 12px;
+            bottom: -6px;
+            opacity: 0.25;
+        }
+        .review-source {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .review-source::before {
+            content: "📌";
+            font-size: 16px;
+        }
+
         .contacts-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -588,7 +719,6 @@
             margin-bottom: 20px;
         }
 
-        /* Календарь */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -678,7 +808,6 @@
             font-weight: 600;
             margin-top: 8px;
         }
-
         .form-status {
             margin-top: 12px;
             font-weight: 500;
@@ -769,6 +898,15 @@
                 padding: 32px 20px;
                 max-width: 100%;
             }
+            .review-header {
+                padding: 16px 18px;
+            }
+            .review-body {
+                padding: 0 18px;
+            }
+            .review-item.active .review-body {
+                padding: 0 18px 18px 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -794,6 +932,17 @@
             .logo span {
                 font-size: 11px;
             }
+            .review-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .review-header .review-user {
+                flex-wrap: wrap;
+            }
+            .review-toggle {
+                align-self: flex-end;
+            }
         }
     </style>
 </head>
@@ -811,6 +960,7 @@
                 <a href="#competencies">Компетенции</a>
                 <a href="#advantages">Преимущества</a>
                 <a href="#blog">Блог</a>
+                <a href="#reviews">Отзывы</a>
                 <a href="#faq">Вопросы</a>
                 <a href="#contacts">Контакты</a>
                 <button class="btn-primary open-modal-btn">Записаться</button>
@@ -958,13 +1108,23 @@
         <div class="container">
             <h2 class="section-title centered">Полезные статьи о здоровье</h2>
             <div class="blog-grid" id="blogGrid">
-                <!-- статьи будут добавлены скриптом -->
+                <!-- статьи вставляются скриптом -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ОТЗЫВЫ (АККОРДЕОН) ===== -->
+    <section id="reviews" class="bg-light">
+        <div class="container">
+            <h2 class="section-title centered">Отзывы пациентов</h2>
+            <div class="reviews-list" id="reviewsList">
+                <!-- отзывы вставляются скриптом -->
             </div>
         </div>
     </section>
 
     <!-- ===== FAQ ===== -->
-    <section id="faq" class="bg-light">
+    <section id="faq">
         <div class="container">
             <h2 class="section-title centered">Часто задаваемые вопросы</h2>
             <div class="faq-list">
@@ -994,7 +1154,7 @@
     </section>
 
     <!-- ===== CONTACTS ===== -->
-    <section id="contacts">
+    <section id="contacts" class="bg-light">
         <div class="container">
             <h2 class="section-title centered">Контакты</h2>
             <div class="contacts-grid">
@@ -1039,7 +1199,7 @@
         </div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ (кастомный календарь) ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
@@ -1047,7 +1207,6 @@
             <p>Выберите удобную дату и время.</p>
 
             <form id="bookingForm">
-                <!-- Контактные данные -->
                 <div class="form-group">
                     <label for="name">Ваше имя *</label>
                     <input type="text" id="name" name="name" placeholder="Иванов Иван Иванович" required />
@@ -1061,7 +1220,6 @@
                     <input type="email" id="email" name="email" placeholder="ivan@example.com" />
                 </div>
 
-                <!-- Календарь -->
                 <div class="form-group">
                     <label>Дата приёма</label>
                     <div class="calendar-nav">
@@ -1072,7 +1230,6 @@
                     <div class="calendar-grid" id="calendarGrid"></div>
                 </div>
 
-                <!-- Выбор времени -->
                 <div class="form-group">
                     <label for="time">Время</label>
                     <select id="time" name="time" required>
@@ -1086,8 +1243,13 @@
         </div>
     </div>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        const API_BASE = 'https://bakhtereva-backend.onrender.com';
+        // ==============================================
+        //  ★★★ НАСТРОЙТЕ ЭТУ ПЕРЕМЕННУЮ ★★★
+        //  Вставьте URL вашего бэкенда на Render
+        // ==============================================
+        const API_BASE = 'https://bakhtereva-backend.onrender.com'; // замените на реальный
 
         // ==============================================
         //  ДАННЫЕ СТАТЕЙ
@@ -1142,6 +1304,66 @@
         }];
 
         // ==============================================
+        //  ДАННЫЕ ОТЗЫВОВ (ОТОБРАНЫ ЛУЧШИЕ)
+        // ==============================================
+        const reviews = [
+            {
+                id: 1,
+                name: 'Наталья Владимировна',
+                avatar: 'Н',
+                date: '27 июня 2021',
+                stars: 5,
+                text: 'Вы самый уважаемый и любимый мой доктор! Вы дали надежду мне не падать духом, пролечили меня и вытащили меня из эмоционального срыва. Вы профессионал с большой буквы. Вы действительно лечите! Спасибо огромное за ваше внимание!',
+                source: 'Отзыв на сайте'
+            },
+            {
+                id: 2,
+                name: 'Сергей Игоревич Распопов',
+                avatar: 'С',
+                date: '04 сентября 2022',
+                stars: 5,
+                text: 'Очень благодарен Елене Владимировне! Не мог ходить, были сильные боли. Куда только не обращался, везде говорили «чем сейчас лечитесь? вот и продолжайте!». У Елены Владимировны особый подход к пациентам. За короткое время поставила меня на ноги.',
+                source: 'Отзыв на сайте'
+            },
+            {
+                id: 3,
+                name: 'Виктория',
+                avatar: 'В',
+                date: '12 мая 2020',
+                stars: 5,
+                text: 'Профессионал, вдумчивый доктор, потрясающий диагност. Внимательный, интеллигентный и неравнодушный человек. Рекомендую как врача, занимающегося проблемами боли, позвоночника, нарушением памяти.',
+                source: 'Отзыв на сайте'
+            },
+            {
+                id: 4,
+                name: 'Алена М.',
+                avatar: 'А',
+                date: '09 апреля 2019',
+                stars: 5,
+                text: 'Спасибо большое Елене Владимировне за очень внимательное и профессиональное отношение при проведении процедуры периневральной блокады. Всё прошло комфортно и безболезненно.',
+                source: 'Отзыв на сайте'
+            },
+            {
+                id: 5,
+                name: 'Пациент (история)',
+                avatar: 'П',
+                date: 'Июнь 2025',
+                stars: 5,
+                text: 'Были на приёме с сыном. Такого тщательного осмотра и опроса у нас не было ни разу за три года регулярного посещения врача в другой клинике. Нам нужно было второе мнение. Елена Владимировна внимательно отнеслась ко всем жалобам, изучила анализы и результаты предыдущих исследований, доступно объяснила суть проблемы и как её решить. Приём длился час.',
+                source: 'История пациента'
+            },
+            {
+                id: 6,
+                name: 'Лидия Гаврилова',
+                avatar: 'Л',
+                date: '13 октября 2025',
+                stars: 5,
+                text: 'Отличный доктор, который видит организм как единое целое. Вежливая, тактичная, очень грамотная и внимательная. Диагноз поставлен, лечение назначено. Всех своих рекомендую только к ней.',
+                source: 'ПроДокторов'
+            }
+        ];
+
+        // ==============================================
         //  ОТРИСОВКА БЛОГА
         // ==============================================
         const blogGrid = document.getElementById('blogGrid');
@@ -1163,6 +1385,54 @@
             });
         }
         renderBlog();
+
+        // ==============================================
+        //  ОТРИСОВКА ОТЗЫВОВ (АККОРДЕОН)
+        // ==============================================
+        const reviewsList = document.getElementById('reviewsList');
+
+        function renderReviews() {
+            reviewsList.innerHTML = '';
+            reviews.forEach((review, index) => {
+                const starsHtml = '★'.repeat(review.stars) + '☆'.repeat(5 - review.stars);
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                if (index === 0) item.classList.add('active'); // первый открыт
+                item.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-user">
+                            <div class="review-avatar">${review.avatar}</div>
+                            <div>
+                                <div class="review-name">${review.name}</div>
+                                <div class="review-date">${review.date}</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <div class="review-stars">${starsHtml}</div>
+                            <span class="review-toggle">+</span>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <div class="review-text">${review.text}</div>
+                        <div class="review-source">${review.source}</div>
+                    </div>
+                `;
+                reviewsList.appendChild(item);
+            });
+
+            // Добавляем обработчики клика на заголовки
+            document.querySelectorAll('.review-header').forEach((header, idx) => {
+                header.addEventListener('click', () => {
+                    const parent = header.closest('.review-item');
+                    // Закрываем все остальные (если хотим, чтобы открывался только один)
+                    document.querySelectorAll('.review-item').forEach(el => {
+                        if (el !== parent) el.classList.remove('active');
+                    });
+                    parent.classList.toggle('active');
+                });
+            });
+        }
+        renderReviews();
 
         // ==============================================
         //  МОДАЛЬНОЕ ОКНО ДЛЯ СТАТЬИ
@@ -1231,21 +1501,15 @@
         });
 
         // ==============================================
-        //  КАСТОМНЫЙ КАЛЕНДАРЬ И ЗАПИСЬ
+        //  КАЛЕНДАРЬ И ЗАПИСЬ
         // ==============================================
-        const WORK_START = 9; // 9:00
-        const WORK_END = 18; // 18:00
-        const SLOT_DURATION = 60; // минут
-
         let currentDate = new Date();
         let selectedDate = null;
-        let selectedTime = null;
 
         const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
             'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
         ];
 
-        // --- Рендер календаря ---
         function renderCalendar(date) {
             const year = date.getFullYear();
             const month = date.getMonth();
@@ -1258,7 +1522,6 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
-            // Заголовки дней недели
             const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
             dayHeaders.forEach(day => {
                 const div = document.createElement('div');
@@ -1267,7 +1530,6 @@
                 grid.appendChild(div);
             });
 
-            // Дни предыдущего месяца
             const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
             for (let i = 0; i < startOffset; i++) {
                 const day = daysInPrevMonth - startOffset + i + 1;
@@ -1277,7 +1539,6 @@
                 grid.appendChild(div);
             }
 
-            // Дни текущего месяца
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             for (let i = 1; i <= daysInMonth; i++) {
@@ -1300,7 +1561,6 @@
                 grid.appendChild(div);
             }
 
-            // Дни следующего месяца
             const totalCells = startOffset + daysInMonth;
             const remaining = (7 - totalCells % 7) % 7;
             for (let i = 1; i <= remaining; i++) {
@@ -1311,30 +1571,22 @@
             }
         }
 
-        // --- Получение свободных слотов ---
         async function fetchAvailableSlots(date) {
             const timeSelect = document.getElementById('time');
             const formStatus = document.getElementById('formStatus');
-            
-            console.log('📅 fetchAvailableSlots вызван для даты:', date);
-            
             timeSelect.innerHTML = '<option value="">Загрузка...</option>';
             timeSelect.disabled = true;
             formStatus.style.display = 'none';
 
             try {
-                // ★★★ ИСПРАВЛЕНИЕ: используем локальную дату ★★★
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
                 const formattedDate = `${year}-${month}-${day}`;
-                
                 const url = `${API_BASE}/slots?date=${formattedDate}&_=${Date.now()}`;
                 console.log('📤 Запрос к бэкенду:', url);
-                
+
                 const response = await fetch(url);
-                console.log('📥 Статус ответа:', response.status);
-                
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || 'Ошибка получения слотов');
@@ -1361,28 +1613,47 @@
             }
         }
 
-        // --- Отправка формы ---
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+
         const bookingForm = document.getElementById('bookingForm');
         const formStatus = document.getElementById('formStatus');
 
         bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // ... валидация ...
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const time = document.getElementById('time').value;
+
+            if (!selectedDate || !time) {
+                formStatus.style.display = 'block';
+                formStatus.textContent = '❌ Пожалуйста, выберите дату и время.';
+                formStatus.style.color = '#E53E3E';
+                return;
+            }
 
             const startDateTime = new Date(selectedDate);
             const [hours, minutes] = time.split(':');
             startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
 
-            // ★★★ ИСПРАВЛЕНИЕ: отправляем локальное время с указанием часового пояса ★★★
             // Формируем ISO-строку с локальным смещением
             const offset = -startDateTime.getTimezoneOffset();
             const offsetSign = offset >= 0 ? '+' : '-';
             const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(2, '0');
             const offsetMinutes = String(Math.abs(offset % 60)).padStart(2, '0');
             const isoString = `${startDateTime.getFullYear()}-${String(startDateTime.getMonth()+1).padStart(2,'0')}-${String(startDateTime.getDate()).padStart(2,'0')}T${String(startDateTime.getHours()).padStart(2,'0')}:${String(startDateTime.getMinutes()).padStart(2,'0')}:00${offsetSign}${offsetHours}:${offsetMinutes}`;
-            
-            console.log('📤 Отправляем время:', isoString);
+
+            formStatus.style.display = 'block';
+            formStatus.textContent = '⏳ Отправка...';
+            formStatus.style.color = '#4A90E2';
 
             try {
                 const response = await fetch(`${API_BASE}/book`, {
@@ -1392,7 +1663,7 @@
                         name: name,
                         phone: phone,
                         email: email,
-                        start_time: isoString  // ← отправляем с часовым поясом
+                        start_time: isoString
                     })
                 });
 
@@ -1401,23 +1672,9 @@
                     formStatus.textContent = '✅ Запись успешно создана! Я свяжусь с вами.';
                     formStatus.style.color = '#38A169';
                     bookingForm.reset();
-                    
-                    // ★★★ ОБНОВЛЯЕМ СПИСОК СЛОТОВ ★★★
-                    if (selectedDate) {
-                        // Сохраняем выбранную дату
-                        const currentDate = new Date(selectedDate);
-                        // Очищаем выделение
-                        document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
-                        // Снова выделяем дату
-                        document.querySelectorAll('.day').forEach(el => {
-                            if (parseInt(el.textContent) === currentDate.getDate()) {
-                                el.classList.add('selected');
-                            }
-                        });
-                        // Перезагружаем слоты
-                        await fetchAvailableSlots(currentDate);
-                    }
-                    
+                    document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
+                    selectedDate = null;
+                    document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
                     setTimeout(() => {
                         document.getElementById('modalOverlay').classList.remove('active');
                         formStatus.style.display = 'none';
@@ -1431,21 +1688,10 @@
             }
         });
 
-        // --- Навигация по месяцам ---
-        document.getElementById('prevMonth').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar(currentDate);
-        });
-        document.getElementById('nextMonth').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar(currentDate);
-        });
-
-        // --- Инициализация ---
         renderCalendar(currentDate);
 
         // ==============================================
-        //  МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ
+        //  МОДАЛЬНОЕ ОКНО ЗАПИСИ
         // ==============================================
         const modalOverlay = document.getElementById('modalOverlay');
         const modalClose = document.getElementById('modalClose');
@@ -1454,15 +1700,10 @@
         function openModal() {
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Полный сброс
             selectedDate = null;
             document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
             document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
             formStatus.style.display = 'none';
-            document.getElementById('name').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('email').value = '';
         }
 
         function closeModal() {
