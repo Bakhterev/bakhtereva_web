@@ -736,7 +736,7 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 4px;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
         .calendar-grid .day-header {
             font-weight: 600;
@@ -770,6 +770,17 @@
         }
         .calendar-grid .day.other-month {
             color: #CBD5E0;
+        }
+        .calendar-timezone-note {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f4f8;
+            padding: 6px 12px;
+            border-radius: 6px;
         }
 
         .form-group {
@@ -874,6 +885,46 @@
             line-height: 1.5;
         }
 
+        /* ===== СПОСОБ СВЯЗИ ===== */
+        .contact-methods {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .contact-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--white);
+            flex: 1 1 auto;
+            min-width: 80px;
+            justify-content: center;
+        }
+        .contact-option:hover {
+            border-color: var(--primary-blue);
+            background: #F7FAFC;
+        }
+        .contact-option.selected {
+            border-color: var(--primary-blue);
+            background: #EBF4FF;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+        .contact-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+        .contact-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
         @media (max-width: 1024px) {
             .hero-content h1 {
                 font-size: 36px;
@@ -970,6 +1021,20 @@
             .format-selector {
                 grid-template-columns: 1fr;
             }
+            .contact-methods {
+                flex-wrap: wrap;
+            }
+            .contact-option {
+                flex: 1 1 45%;
+                min-width: 60px;
+                padding: 8px 12px;
+            }
+            .contact-label {
+                font-size: 13px;
+            }
+            .contact-icon {
+                font-size: 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1005,6 +1070,9 @@
             }
             .review-toggle {
                 align-self: flex-end;
+            }
+            .contact-option {
+                flex: 1 1 100%;
             }
         }
     </style>
@@ -1262,7 +1330,7 @@
         </div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ (С ПЕРЕКЛЮЧАТЕЛЕМ) ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ (С ПЕРЕКЛЮЧАТЕЛЕМ И ВЫБОРОМ СВЯЗИ) ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
@@ -1279,9 +1347,9 @@
                             <div class="format-content">
                                 <div class="format-label">
                                     Онлайн-консультация
-                                    <span class="format-badge">Рекомендуемый</span>
+                                    <span class="format-badge" style="background: #38A169; font-size: 11px;">Рекомендуемый</span>
                                 </div>
-                                <div class="format-desc">Информационная услуга: разбор вашей ситуации, второе мнение, рекомендации по анализам. Проводится по видеосвязи.</div>
+                                <div class="format-desc">Информационная услуга: разбор вашей ситуации, второе мнение, рекомендации по анализам. Проводится по видеосвязи — удобно и безопасно.</div>
                             </div>
                         </div>
                         <div class="format-option" data-format="offline">
@@ -1293,6 +1361,30 @@
                         </div>
                     </div>
                     <input type="hidden" id="consultationType" name="consultation_type" value="online">
+                </div>
+
+                <!-- СПОСОБ СВЯЗИ -->
+                <div class="form-group">
+                    <label>Предпочитаемый способ связи</label>
+                    <div class="contact-methods" id="contactMethods">
+                        <div class="contact-option selected" data-method="telegram">
+                            <span class="contact-icon">✈️</span>
+                            <span class="contact-label">Telegram</span>
+                        </div>
+                        <div class="contact-option" data-method="whatsapp">
+                            <span class="contact-icon">💬</span>
+                            <span class="contact-label">WhatsApp</span>
+                        </div>
+                        <div class="contact-option" data-method="email">
+                            <span class="contact-icon">✉️</span>
+                            <span class="contact-label">Email</span>
+                        </div>
+                        <div class="contact-option" data-method="max">
+                            <span class="contact-icon">📱</span>
+                            <span class="contact-label">Мессенджер Макс</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="contactMethod" name="contact_method" value="telegram">
                 </div>
 
                 <!-- Контактные данные -->
@@ -1318,6 +1410,9 @@
                         <button type="button" id="nextMonth">›</button>
                     </div>
                     <div class="calendar-grid" id="calendarGrid"></div>
+                    <div class="calendar-timezone-note">
+                        ⏰ Все время указано по <strong>Екатеринбургу (UTC+5)</strong>
+                    </div>
                 </div>
 
                 <!-- Выбор времени -->
@@ -1604,6 +1699,30 @@
         });
 
         // ==============================================
+        //  ВЫБОР СПОСОБА СВЯЗИ
+        // ==============================================
+        const contactOptions = document.querySelectorAll('.contact-option');
+        const contactMethodInput = document.getElementById('contactMethod');
+
+        contactOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                contactOptions.forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+                contactMethodInput.value = this.dataset.method;
+                // Если выбран Email, сделаем поле email обязательным
+                const emailField = document.getElementById('email');
+                const emailLabel = emailField.closest('.form-group').querySelector('label');
+                if (this.dataset.method === 'email') {
+                    emailLabel.innerHTML = 'Email *';
+                    emailField.required = true;
+                } else {
+                    emailLabel.innerHTML = 'Email (для подтверждения)';
+                    emailField.required = false;
+                }
+            });
+        });
+
+        // ==============================================
         //  КАЛЕНДАРЬ И ЗАПИСЬ
         // ==============================================
         let currentDate = new Date();
@@ -1743,24 +1862,27 @@
                 return;
             }
 
+            // Если выбран Email, проверяем, что email заполнен
+            if (contactMethodInput.value === 'email') {
+                if (!email || !email.includes('@')) {
+                    formStatus.style.display = 'block';
+                    formStatus.textContent = '❌ При выборе Email укажите корректный адрес.';
+                    formStatus.style.color = '#E53E3E';
+                    return;
+                }
+            }
+
             const startDateTime = new Date(selectedDate);
             const [hours, minutes] = time.split(':');
             startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
 
-            // ★★★ ПРОСТОЕ РЕШЕНИЕ ★★★
-            // Отправляем дату в ISO-формате с локальным смещением
-            // Например: 2026-08-28T10:00:00+05:00
-            const offset = -startDateTime.getTimezoneOffset(); // смещение в минутах
-            const offsetSign = offset >= 0 ? '+' : '-';
-            const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(2, '0');
-            const offsetMinutes = String(Math.abs(offset % 60)).padStart(2, '0');
-
+            // Явно указываем Екатеринбург (+05:00)
             const isoString = 
                 `${startDateTime.getFullYear()}-${String(startDateTime.getMonth() + 1).padStart(2, '0')}-${String(startDateTime.getDate()).padStart(2, '0')}T` +
-                `${String(startDateTime.getHours()).padStart(2, '0')}:${String(startDateTime.getMinutes()).padStart(2, '0')}:00` +
-                `${offsetSign}${offsetHours}:${offsetMinutes}`;
+                `${String(startDateTime.getHours()).padStart(2, '0')}:${String(startDateTime.getMinutes()).padStart(2, '0')}:00+05:00`;
 
-            console.log('📤 Отправляем время:', isoString);
+            console.log('📤 Отправляем время (ЕКБ):', isoString);
+
             formStatus.style.display = 'block';
             formStatus.textContent = '⏳ Отправка...';
             formStatus.style.color = '#4A90E2';
@@ -1774,7 +1896,8 @@
                         phone: phone,
                         email: email,
                         start_time: isoString,
-                        consultation_type: consultationTypeInput.value
+                        consultation_type: consultationTypeInput.value,
+                        contact_method: contactMethodInput.value
                     })
                 });
 
@@ -1786,6 +1909,14 @@
                     document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
                     selectedDate = null;
                     document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
+                    // Сбрасываем выбор способа связи на Telegram
+                    contactOptions.forEach(el => el.classList.remove('selected'));
+                    document.querySelector('.contact-option[data-method="telegram"]').classList.add('selected');
+                    contactMethodInput.value = 'telegram';
+                    const emailField = document.getElementById('email');
+                    const emailLabel = emailField.closest('.form-group').querySelector('label');
+                    emailLabel.innerHTML = 'Email (для подтверждения)';
+                    emailField.required = false;
                     setTimeout(() => {
                         document.getElementById('modalOverlay').classList.remove('active');
                         formStatus.style.display = 'none';
@@ -1819,6 +1950,14 @@
             formatOptions.forEach(el => el.classList.remove('selected'));
             document.querySelector('.format-option[data-format="online"]').classList.add('selected');
             consultationTypeInput.value = 'online';
+            // Сбрасываем выбор способа связи на Telegram
+            contactOptions.forEach(el => el.classList.remove('selected'));
+            document.querySelector('.contact-option[data-method="telegram"]').classList.add('selected');
+            contactMethodInput.value = 'telegram';
+            const emailField = document.getElementById('email');
+            const emailLabel = emailField.closest('.form-group').querySelector('label');
+            emailLabel.innerHTML = 'Email (для подтверждения)';
+            emailField.required = false;
         }
 
         function closeModal() {
