@@ -1747,12 +1747,20 @@
             const [hours, minutes] = time.split(':');
             startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
 
-            const offset = -startDateTime.getTimezoneOffset();
+            // ★★★ ПРОСТОЕ РЕШЕНИЕ ★★★
+            // Отправляем дату в ISO-формате с локальным смещением
+            // Например: 2026-08-28T10:00:00+05:00
+            const offset = -startDateTime.getTimezoneOffset(); // смещение в минутах
             const offsetSign = offset >= 0 ? '+' : '-';
             const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(2, '0');
             const offsetMinutes = String(Math.abs(offset % 60)).padStart(2, '0');
-            const isoString = `${startDateTime.getFullYear()}-${String(startDateTime.getMonth()+1).padStart(2,'0')}-${String(startDateTime.getDate()).padStart(2,'0')}T${String(startDateTime.getHours()).padStart(2,'0')}:${String(startDateTime.getMinutes()).padStart(2,'0')}:00${offsetSign}${offsetHours}:${offsetMinutes}`;
 
+            const isoString = 
+                `${startDateTime.getFullYear()}-${String(startDateTime.getMonth() + 1).padStart(2, '0')}-${String(startDateTime.getDate()).padStart(2, '0')}T` +
+                `${String(startDateTime.getHours()).padStart(2, '0')}:${String(startDateTime.getMinutes()).padStart(2, '0')}:00` +
+                `${offsetSign}${offsetHours}:${offsetMinutes}`;
+
+            console.log('📤 Отправляем время:', isoString);
             formStatus.style.display = 'block';
             formStatus.textContent = '⏳ Отправка...';
             formStatus.style.color = '#4A90E2';
