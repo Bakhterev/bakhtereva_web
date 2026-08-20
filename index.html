@@ -1315,18 +1315,32 @@
         async function fetchAvailableSlots(date) {
             const timeSelect = document.getElementById('time');
             const formStatus = document.getElementById('formStatus');
+            
+            console.log('📅 fetchAvailableSlots вызван для даты:', date);
+            
             timeSelect.innerHTML = '<option value="">Загрузка...</option>';
             timeSelect.disabled = true;
             formStatus.style.display = 'none';
 
             try {
-                const formattedDate = date.toISOString().split('T')[0];
-                const response = await fetch(`${API_BASE}/slots?date=${formattedDate}`);
+                // ★★★ ИСПРАВЛЕНИЕ: используем локальную дату ★★★
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
+                
+                const url = `${API_BASE}/slots?date=${formattedDate}&_=${Date.now()}`;
+                console.log('📤 Запрос к бэкенду:', url);
+                
+                const response = await fetch(url);
+                console.log('📥 Статус ответа:', response.status);
+                
                 if (!response.ok) {
                     const err = await response.json();
                     throw new Error(err.error || 'Ошибка получения слотов');
                 }
                 const slots = await response.json();
+                console.log('✅ Получены слоты от бэкенда:', slots);
 
                 timeSelect.innerHTML = '<option value="">— выберите время —</option>';
                 if (slots.length === 0) {
@@ -1341,7 +1355,7 @@
                 }
                 timeSelect.disabled = false;
             } catch (error) {
-                console.error('Ошибка загрузки слотов:', error);
+                console.error('❌ Ошибка загрузки слотов:', error);
                 timeSelect.innerHTML = `<option value="">Ошибка: ${error.message}</option>`;
                 timeSelect.disabled = false;
             }
@@ -1354,25 +1368,21 @@
         bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const time = document.getElementById('time').value;
-
-            if (!selectedDate || !time) {
-                formStatus.style.display = 'block';
-                formStatus.textContent = '❌ Пожалуйста, выберите дату и время.';
-                formStatus.style.color = '#E53E3E';
-                return;
-            }
+            // ... валидация ...
 
             const startDateTime = new Date(selectedDate);
             const [hours, minutes] = time.split(':');
             startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
 
-            formStatus.style.display = 'block';
-            formStatus.textContent = '⏳ Отправка...';
-            formStatus.style.color = '#4A90E2';
+            // ★★★ ИСПРАВЛЕНИЕ: отправляем локальное время с указанием часового пояса ★★★
+            // Формируем ISO-строку с локальным смещением
+            const offset = -startDateTime.getTimezoneOffset();
+            const offsetSign = offset >= 0 ? '+' : '-';
+            const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(2, '0');
+            const offsetMinutes = String(Math.abs(offset % 60)).padStart(2, '0');
+            const isoString = `${startDateTime.getFullYear()}-${String(startDateTime.getMonth()+1).padStart(2,'0')}-${String(startDateTime.getDate()).padStart(2,'0')}T${String(startDateTime.getHours()).padStart(2,'0')}:${String(startDateTime.getMinutes()).padStart(2,'0')}:00${offsetSign}${offsetHours}:${offsetMinutes}`;
+            
+            console.log('📤 Отправляем время:', isoString);
 
             try {
                 const response = await fetch(`${API_BASE}/book`, {
@@ -1382,7 +1392,7 @@
                         name: name,
                         phone: phone,
                         email: email,
-                        start_time: startDateTime.toISOString()
+                        start_time: isoString  // ← отправляем с часовым поясом
                     })
                 });
 
@@ -1391,9 +1401,23 @@
                     formStatus.textContent = '✅ Запись успешно создана! Я свяжусь с вами.';
                     formStatus.style.color = '#38A169';
                     bookingForm.reset();
-                    document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
-                    selectedDate = null;
-                    document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
+                    
+                    // ★★★ ОБНОВЛЯЕМ СПИСОК СЛОТОВ ★★★
+                    if (selectedDate) {
+                        // Сохраняем выбранную дату
+                        const currentDate = new Date(selectedDate);
+                        // Очищаем выделение
+                        document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
+                        // Снова выделяем дату
+                        document.querySelectorAll('.day').forEach(el => {
+                            if (parseInt(el.textContent) === currentDate.getDate()) {
+                                el.classList.add('selected');
+                            }
+                        });
+                        // Перезагружаем слоты
+                        await fetchAvailableSlots(currentDate);
+                    }
+                    
                     setTimeout(() => {
                         document.getElementById('modalOverlay').classList.remove('active');
                         formStatus.style.display = 'none';
@@ -1430,11 +1454,15 @@
         function openModal() {
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Сбрасываем выбор при открытии
+            
+            // Полный сброс
             selectedDate = null;
             document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
             document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
             formStatus.style.display = 'none';
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('email').value = '';
         }
 
         function closeModal() {
