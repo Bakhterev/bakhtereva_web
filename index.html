@@ -474,7 +474,6 @@
             padding: 6px 20px;
         }
 
-        /* ===== ОТЗЫВЫ (аккордеон) ===== */
         .reviews-list {
             max-width: 900px;
             margin: 0 auto;
@@ -687,7 +686,7 @@
         .modal {
             background: var(--white);
             border-radius: var(--radius);
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             padding: 40px 32px 32px;
             position: relative;
@@ -814,6 +813,67 @@
             display: none;
         }
 
+        /* ===== ПЕРЕКЛЮЧАТЕЛЬ ФОРМАТОВ ===== */
+        .format-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .format-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 2px solid #E2E8F0;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--white);
+        }
+        .format-option:hover {
+            border-color: var(--primary-blue);
+            background: #F7FAFC;
+        }
+        .format-option.selected {
+            border-color: var(--primary-blue);
+            background: #EBF4FF;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+        .format-icon {
+            font-size: 28px;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .format-content {
+            flex: 1;
+        }
+        .format-label {
+            font-weight: 600;
+            font-size: 17px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .format-badge {
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .format-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+
         @media (max-width: 1024px) {
             .hero-content h1 {
                 font-size: 36px;
@@ -906,6 +966,9 @@
             }
             .review-item.active .review-body {
                 padding: 0 18px 18px 18px;
+            }
+            .format-selector {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1199,14 +1262,40 @@
         </div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПИСИ (С ПЕРЕКЛЮЧАТЕЛЕМ) ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
-            <h2>Запись на приём</h2>
-            <p>Выберите удобную дату и время.</p>
+            <h2>Запись на консультацию</h2>
+            <p>Выберите удобный формат и время.</p>
 
             <form id="bookingForm">
+                <!-- ПЕРЕКЛЮЧАТЕЛЬ ФОРМАТОВ -->
+                <div class="form-group">
+                    <label>Формат консультации</label>
+                    <div class="format-selector" id="formatSelector">
+                        <div class="format-option selected" data-format="online">
+                            <div class="format-icon">💻</div>
+                            <div class="format-content">
+                                <div class="format-label">
+                                    Онлайн-консультация
+                                    <span class="format-badge">Рекомендуемый</span>
+                                </div>
+                                <div class="format-desc">Информационная услуга: разбор вашей ситуации, второе мнение, рекомендации по анализам. Проводится по видеосвязи.</div>
+                            </div>
+                        </div>
+                        <div class="format-option" data-format="offline">
+                            <div class="format-icon">🏥</div>
+                            <div class="format-content">
+                                <div class="format-label">Очный приём в клинике</div>
+                                <div class="format-desc">Полный неврологический осмотр, инструментальная диагностика, назначение лечения в медицинском центре.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="consultationType" name="consultation_type" value="online">
+                </div>
+
+                <!-- Контактные данные -->
                 <div class="form-group">
                     <label for="name">Ваше имя *</label>
                     <input type="text" id="name" name="name" placeholder="Иванов Иван Иванович" required />
@@ -1220,6 +1309,7 @@
                     <input type="email" id="email" name="email" placeholder="ivan@example.com" />
                 </div>
 
+                <!-- Календарь -->
                 <div class="form-group">
                     <label>Дата приёма</label>
                     <div class="calendar-nav">
@@ -1230,6 +1320,7 @@
                     <div class="calendar-grid" id="calendarGrid"></div>
                 </div>
 
+                <!-- Выбор времени -->
                 <div class="form-group">
                     <label for="time">Время</label>
                     <select id="time" name="time" required>
@@ -1304,7 +1395,7 @@
         }];
 
         // ==============================================
-        //  ДАННЫЕ ОТЗЫВОВ (ОТОБРАНЫ ЛУЧШИЕ)
+        //  ДАННЫЕ ОТЗЫВОВ
         // ==============================================
         const reviews = [
             {
@@ -1397,7 +1488,7 @@
                 const starsHtml = '★'.repeat(review.stars) + '☆'.repeat(5 - review.stars);
                 const item = document.createElement('div');
                 item.className = 'review-item';
-                if (index === 0) item.classList.add('active'); // первый открыт
+                if (index === 0) item.classList.add('active');
                 item.innerHTML = `
                     <div class="review-header">
                         <div class="review-user">
@@ -1420,11 +1511,9 @@
                 reviewsList.appendChild(item);
             });
 
-            // Добавляем обработчики клика на заголовки
-            document.querySelectorAll('.review-header').forEach((header, idx) => {
+            document.querySelectorAll('.review-header').forEach((header) => {
                 header.addEventListener('click', () => {
                     const parent = header.closest('.review-item');
-                    // Закрываем все остальные (если хотим, чтобы открывался только один)
                     document.querySelectorAll('.review-item').forEach(el => {
                         if (el !== parent) el.classList.remove('active');
                     });
@@ -1497,6 +1586,20 @@
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
                 item.classList.toggle('active');
+            });
+        });
+
+        // ==============================================
+        //  ПЕРЕКЛЮЧАТЕЛЬ ФОРМАТА
+        // ==============================================
+        const formatOptions = document.querySelectorAll('.format-option');
+        const consultationTypeInput = document.getElementById('consultationType');
+
+        formatOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                formatOptions.forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+                consultationTypeInput.value = this.dataset.format;
             });
         });
 
@@ -1644,7 +1747,6 @@
             const [hours, minutes] = time.split(':');
             startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
 
-            // Формируем ISO-строку с локальным смещением
             const offset = -startDateTime.getTimezoneOffset();
             const offsetSign = offset >= 0 ? '+' : '-';
             const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(2, '0');
@@ -1663,7 +1765,8 @@
                         name: name,
                         phone: phone,
                         email: email,
-                        start_time: isoString
+                        start_time: isoString,
+                        consultation_type: consultationTypeInput.value
                     })
                 });
 
@@ -1704,6 +1807,10 @@
             document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
             document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
             formStatus.style.display = 'none';
+            // Сбрасываем выбор формата на онлайн
+            formatOptions.forEach(el => el.classList.remove('selected'));
+            document.querySelector('.format-option[data-format="online"]').classList.add('selected');
+            consultationTypeInput.value = 'online';
         }
 
         function closeModal() {
