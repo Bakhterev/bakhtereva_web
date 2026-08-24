@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Невролог Бахтерева Елена Владимировна | Приём и консультации</title>
     <meta name="description" content="Врач-невролог, доктор медицинских наук Бахтерева Елена Владимировна. Лечение головной боли, болей в спине, головокружений. Онлайн-информирование. Запись на приём." />
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.jpg" /> -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -278,42 +283,87 @@
         .bg-light {
             background: var(--bg-light);
         }
+
+        /* ===== ОБРАЗОВАНИЕ (группы + кнопка "Показать все") ===== */
+        .edu-group {
+            margin-bottom: 40px;
+        }
+        .edu-group:last-child {
+            margin-bottom: 0;
+        }
+        .edu-group-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+        }
+        .edu-group-title .icon {
+            font-size: 28px;
+        }
         .edu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
-            margin-top: 10px;
         }
         .edu-card {
             background: var(--white);
-            padding: 24px;
+            padding: 20px 20px 18px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             transition: transform var(--transition);
+            display: flex;
+            flex-direction: column;
         }
         .edu-card:hover {
             transform: translateY(-4px);
         }
-        .edu-card .icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-            display: block;
-        }
         .edu-card .title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
             color: var(--primary-dark);
             margin-bottom: 4px;
+            line-height: 1.3;
         }
         .edu-card .year {
             font-size: 14px;
             color: var(--text-gray);
             font-weight: 500;
+            margin-bottom: 2px;
         }
         .edu-card .org {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-dark);
-            margin-top: 4px;
+            margin-top: 2px;
+        }
+
+        /* скрытые курсы */
+        .edu-card.hidden-extra {
+            display: none;
+        }
+        .edu-group .show-more-btn {
+            margin-top: 16px;
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all var(--transition);
+            display: inline-block;
+        }
+        .edu-group .show-more-btn:hover {
+            background: var(--primary-blue);
+            color: #fff;
+        }
+        .edu-group .show-more-btn:focus {
+            outline: none;
         }
 
         .comp-grid {
@@ -369,7 +419,6 @@
             line-height: 1.6;
         }
 
-        /* ===== ФОРМАТЫ ПРИЁМА ===== */
         .formats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -779,6 +828,57 @@
             color: var(--text-gray);
             margin-bottom: 20px;
         }
+        .modal .policy-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+        .modal .policy-text a {
+            color: var(--primary-blue);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .modal .policy-text a:hover {
+            color: var(--primary-dark);
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: var(--primary-blue);
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            font-size: 15px;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+        .checkbox-group label a {
+            color: var(--primary-blue);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .checkbox-group label a:hover {
+            color: var(--primary-dark);
+        }
+        .checkbox-error {
+            color: #E53E3E;
+            font-size: 14px;
+            margin-top: -6px;
+            margin-bottom: 12px;
+            display: none;
+        }
+        .checkbox-error.visible {
+            display: block;
+        }
 
         .calendar-nav {
             display: flex;
@@ -886,7 +986,6 @@
             display: none;
         }
 
-        /* ===== ПЕРЕКЛЮЧАТЕЛЬ ФОРМАТОВ (в модалке) ===== */
         .format-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -947,7 +1046,6 @@
             line-height: 1.5;
         }
 
-        /* ===== СПОСОБ СВЯЗИ ===== */
         .contact-methods {
             display: flex;
             gap: 12px;
@@ -985,6 +1083,41 @@
             font-size: 14px;
             font-weight: 500;
             color: var(--text-dark);
+        }
+
+        .policy-modal .modal {
+            max-width: 800px;
+        }
+        .policy-modal .modal .policy-content {
+            max-height: 60vh;
+            overflow-y: auto;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            padding-right: 10px;
+        }
+        .policy-modal .modal .policy-content h3 {
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .policy-modal .modal .policy-content p {
+            margin-bottom: 10px;
+        }
+        .policy-modal .modal .policy-content ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .policy-modal .modal .policy-content ul li {
+            margin-bottom: 4px;
+        }
+        .policy-modal .modal .policy-content .section-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-top: 16px;
+            margin-bottom: 6px;
         }
 
         @media (max-width: 1024px) {
@@ -1062,6 +1195,9 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            .edu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
             .contacts-grid {
                 grid-template-columns: 1fr;
             }
@@ -1103,6 +1239,9 @@
             }
             .contact-icon {
                 font-size: 20px;
+            }
+            .policy-modal .modal .policy-content {
+                max-height: 50vh;
             }
         }
 
@@ -1148,6 +1287,9 @@
             }
             .format-card-title {
                 font-size: 20px;
+            }
+            .edu-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1255,10 +1397,11 @@
                     <div class="format-card-price">5 000 ₽</div>
                     <ul class="format-card-features">
                         <li>⏳ 60 минут</li>
-                        <li>📹 Видеосвязь</li>
+                        <li>📹 Видеосвязь (Zoom)</li>
                         <li>📋 Сбор жалоб и анамнеза</li>
                         <li>🔍 Разбор анализов и МРТ</li>
                         <li>🧭 Формирование маршрута дообследования</li>
+                        <li>💊 Возможные варианты лечения согласно клиническим рекомендациям (группы препаратов, методы терапии, физиотерапия)</li>
                         <li>🔄 Второе мнение</li>
                         <li>💬 Ответы на ваши вопросы</li>
                         <li>🤝 Хорошо для первичного знакомства</li>
@@ -1295,50 +1438,104 @@
     <!-- ===== EDUCATION ===== -->
     <section id="education">
         <div class="container">
-            <h2 class="section-title centered">Образование и сертификаты</h2>
-            <div class="edu-grid">
-                <div class="edu-card">
+            <h2 class="section-title centered">Образование и повышение квалификации</h2>
+
+            <!-- ГРУППА 1: Базовое образование -->
+            <div class="edu-group">
+                <div class="edu-group-title">
                     <span class="icon">🎓</span>
-                    <div class="title">Лечебное дело</div>
-                    <div class="year">1992–1998</div>
-                    <div class="org">Уральская государственная медицинская академия</div>
+                    Образование
                 </div>
-                <div class="edu-card">
-                    <span class="icon">🏥</span>
-                    <div class="title">Клиническая ординатура (неврология)</div>
-                    <div class="year">1998–2000</div>
-                    <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
+                <div class="edu-grid">
+                    <!-- Сортировка по дате: от новых к старым (сначала 1998-2000, потом 1992-1998) -->
+                    <div class="edu-card">
+                        <div class="title">Клиническая ординатура (неврология)</div>
+                        <div class="year">1998–2000</div>
+                        <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Лечебное дело</div>
+                        <div class="year">1992–1998</div>
+                        <div class="org">Уральская государственная медицинская академия</div>
+                    </div>
                 </div>
-                <div class="edu-card">
-                    <span class="icon">📘</span>
-                    <div class="title">Неврология</div>
-                    <div class="year">2019</div>
-                    <div class="org">АНО ВО "Европейский Университет"</div>
+            </div>
+
+            <!-- ГРУППА 2: Повышение квалификации -->
+            <div class="edu-group">
+                <div class="edu-group-title">
+                    <span class="icon">📚</span>
+                    Повышение квалификации
                 </div>
-                <div class="edu-card">
-                    <span class="icon">📊</span>
-                    <div class="title">Функциональная диагностика</div>
-                    <div class="year">2019, 2010</div>
-                    <div class="org">ФГБОУ ВО УГМУ Минздрава РФ</div>
+                <div class="edu-grid" id="eduQualGrid">
+                    <!-- Сортировка по году: от новых к старым -->
+                    <div class="edu-card">
+                        <div class="title">Хроническая боль как междисциплинарная проблема</div>
+                        <div class="year">2025</div>
+                        <div class="org">г. Екатеринбург</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Организация здравоохранения и общественное здоровье</div>
+                        <div class="year">2025</div>
+                        <div class="org">—</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Вертеброневрология</div>
+                        <div class="year">2024</div>
+                        <div class="org">—</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Функциональная диагностика состояний центральной и периферической нервной системы</div>
+                        <div class="year">2024</div>
+                        <div class="org">г. Москва</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Нейродегенеративные заболевания: клиника, диагностика, лечение</div>
+                        <div class="year">2024</div>
+                        <div class="org">РМАНПО, г. Москва</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">GCP (Good Clinical Practice)</div>
+                        <div class="year">2023</div>
+                        <div class="org">Сертификат на проведение клинических исследований</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Клиническая нейрофизиология</div>
+                        <div class="year">2023</div>
+                        <div class="org">г. Санкт-Петербург</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Неврология</div>
+                        <div class="year">2023</div>
+                        <div class="org">—</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Транскраниальная магнитная стимуляция</div>
+                        <div class="year">2022</div>
+                        <div class="org">Российский центр неврологии и нейронаук, г. Москва</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Профпатология</div>
+                        <div class="year">2020</div>
+                        <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Неврология</div>
+                        <div class="year">2019</div>
+                        <div class="org">АНО ВО "Европейский Университет"</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Функциональная диагностика</div>
+                        <div class="year">2019, 2010</div>
+                        <div class="org">ФГБОУ ВО УГМУ Минздрава РФ</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">Физиотерапия</div>
+                        <div class="year">2005</div>
+                        <div class="org">УГМА, кафедра физиотерапии</div>
+                    </div>
                 </div>
-                <div class="edu-card">
-                    <span class="icon">🛡️</span>
-                    <div class="title">Профпатология</div>
-                    <div class="year">2020</div>
-                    <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
-                </div>
-                <div class="edu-card">
-                    <span class="icon">⚡</span>
-                    <div class="title">Физиотерапия</div>
-                    <div class="year">2005</div>
-                    <div class="org">УГМА, кафедра физиотерапии</div>
-                </div>
-                <div class="edu-card">
-                    <span class="icon">📋</span>
-                    <div class="title">GCP (Good Clinical Practice)</div>
-                    <div class="year">2023</div>
-                    <div class="org">Сертификат на проведение клинических исследований</div>
-                </div>
+                <button class="show-more-btn" id="eduQualToggle">Показать все курсы</button>
             </div>
         </div>
     </section>
@@ -1409,7 +1606,7 @@
                         <p>Я предлагаю два формата:</p>
                         <ul>
                             <li><strong>Очный приём в клинике</strong> — полный неврологический осмотр, инструментальная диагностика, назначение лечения в медицинском центре Екатеринбурга.</li>
-                            <li><strong>Онлайн-информирование</strong> — информационная услуга для пациентов из любых городов. Разбор вашей ситуации, второе мнение, рекомендации по анализам и плану лечения. Проводится по видеосвязи.</li>
+                            <li><strong>Онлайн-информирование</strong> — информационная услуга для пациентов из любых городов. Разбор вашей ситуации, второе мнение, рекомендации по анализам и плану лечения. Проводится по видеосвязи (Zoom).</li>
                         </ul>
                         <p>Онлайн-информирование — это удобный способ получить экспертную оценку без необходимости приезжать в клинику. Вы присылаете мне свои анализы и МРТ-снимки, а я даю развёрнутые рекомендации. Хорошо для первичного знакомства. Затем вы можете записаться на очный приём.</p>
                     </div>
@@ -1462,7 +1659,7 @@
                         <p>На очный приём возьмите:</p>
                         <ul>
                             <li>Паспорт</li>
-                            <li>Полис ОМС или ДМС</li>
+                            <li>Полис ДМС (при наличии)</li>
                             <li>Результаты предыдущих обследований (МРТ, КТ, УЗИ, анализы крови)</li>
                             <li>Выписки из истории болезни (если есть)</li>
                         </ul>
@@ -1498,9 +1695,9 @@
                     <div class="faq-answer">
                         <p>Я провожу приёмы в комфортном темпе, без спешки:</p>
                         <ul>
-                            <li><strong>Первичный очный приём</strong> — 50–60 минут.</li>
+                            <li><strong>Первичный очный приём</strong> — 50-60 минут.</li>
                             <li><strong>Онлайн-информирование</strong> — 60 минут.</li>
-                            <li><strong>Повторные консультации</strong> — 30–40 минут.</li>
+                            <li><strong>Повторные консультации</strong> — 30-40 минут.</li>
                         </ul>
                         <p>Этого времени достаточно, чтобы детально разобрать вашу ситуацию и ответить на все вопросы.</p>
                     </div>
@@ -1533,7 +1730,7 @@
                             <li>Второе мнение</li>
                             <li>Ответы на вопросы</li>
                         </ul>
-                        <p><strong>Важно:</strong> Во время беседы не ставится диагноз, не назначаются лекарственные препараты, письменное заключение не выдаётся. После беседы необходимо получить очную консультацию врача (выбранного самостоятельно). Стоимость услуги — 8 000 ₽.</p>
+                        <p><strong>Важно:</strong> Во время беседы не ставится диагноз, не назначаются лекарственные препараты, письменное заключение не выдаётся. После беседы необходимо получить очную консультацию врача (выбранного самостоятельно). Стоимость услуги — 5 000 ₽.</p>
                         <p>В случае острой ситуации, требующей быстрого решения, обратитесь за помощью к врачу очно.</p>
                     </div>
                 </div>
@@ -1592,9 +1789,9 @@
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
             <h2>Запись на консультацию</h2>
-            <p>Оставьте заявку на <strong>онлайн-информирование</strong> или очный приём. Я свяжусь с вами для согласования времени. Стоимость приема — <strong>5 000 ₽</strong>.</p>
+            <p>Оставьте заявку на <strong>онлайн-информирование</strong> или очный приём. Я свяжусь с вами для согласования времени. Стоимость онлайн-информирования — <strong>5 000 ₽</strong>.</p>
 
-            <form id="bookingForm">
+            <form id="bookingForm" novalidate>
                 <!-- ПЕРЕКЛЮЧАТЕЛЬ ФОРМАТОВ В МОДАЛКЕ -->
                 <div class="form-group">
                     <label>Формат консультации</label>
@@ -1607,7 +1804,7 @@
                                     <span class="format-badge" style="background: #38A169; font-size: 11px;">Рекомендуемый</span>
                                 </div>
                                 <div class="format-desc">
-                                    <strong>Информационная услуга</strong> — сбор жалоб, разбор анализов, второе мнение, рекомендации по обследованию и лечению. <strong>Не является медицинской консультацией</strong>. Длительность 60 мин. Стоимость 8 000 ₽.
+                                    <strong>Информационная услуга</strong> — сбор жалоб, разбор анализов, второе мнение, рекомендации по обследованию и лечению. <strong>Не является медицинской консультацией</strong>. Длительность 60 мин. Стоимость 5 000 ₽.
                                 </div>
                             </div>
                         </div>
@@ -1680,15 +1877,93 @@
                     </select>
                 </div>
 
+                <!-- СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent" name="consent" required />
+                    <label for="consent">
+                        Я даю согласие на обработку моих персональных данных в соответствии с
+                        <a href="#" id="openPolicyLink">Политикой конфиденциальности</a>
+                    </label>
+                </div>
+                <div class="checkbox-error" id="consentError">Для отправки заявки необходимо дать согласие на обработку персональных данных.</div>
+
                 <button type="submit" class="btn-primary form-submit">Записаться</button>
                 <div id="formStatus" class="form-status"></div>
             </form>
         </div>
     </div>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО С ПОЛИТИКОЙ КОНФИДЕНЦИАЛЬНОСТИ ===== -->
+    <div class="modal-overlay policy-modal" id="policyModal">
+        <div class="modal">
+            <button class="modal-close" id="policyModalClose">&times;</button>
+            <h2>Политика конфиденциальности</h2>
+            <div class="policy-content">
+                <p><strong>Настоящая Политика конфиденциальности</strong> определяет порядок обработки и защиты персональных данных пользователей сайта Бахтеревой Е.В.</p>
+
+                <div class="section-title">1. ОБЩИЕ ПОЛОЖЕНИЯ</div>
+                <p>Настоящая Политика конфиденциальности является обязательным документом для всех пользователей сайта. Используя сайт, вы даете согласие на обработку ваших персональных данных в соответствии с данной Политикой.</p>
+
+                <div class="section-title">2. ПЕРСОНАЛЬНЫЕ ДАННЫЕ</div>
+                <p>К персональным данным, обрабатываемым на сайте, относятся:</p>
+                <ul>
+                    <li>ФИО пользователя</li>
+                    <li>Номер телефона</li>
+                    <li>Адрес электронной почты</li>
+                    <li>Данные, предоставленные при заполнении формы записи</li>
+                </ul>
+
+                <div class="section-title">3. ЦЕЛИ СБОРА ПЕРСОНАЛЬНЫХ ДАННЫХ</div>
+                <p>Персональные данные пользователя используются в следующих целях:</p>
+                <ul>
+                    <li>Для записи на приём или онлайн-информирование</li>
+                    <li>Для установления обратной связи с пользователем</li>
+                    <li>Для обработки запросов и заявок</li>
+                    <li>Для подтверждения достоверности предоставленных данных</li>
+                </ul>
+
+                <div class="section-title">4. СПОСОБЫ И СРОКИ ОБРАБОТКИ</div>
+                <p>Обработка персональных данных осуществляется без ограничения срока, любым законным способом, в том числе с использованием средств автоматизации.</p>
+                <p>Администрация сайта принимает все необходимые меры для защиты персональных данных от неправомерного доступа, уничтожения, изменения, блокирования, копирования, распространения.</p>
+
+                <div class="section-title">5. ОБЯЗАТЕЛЬСТВА СТОРОН</div>
+                <p>Пользователь обязуется предоставлять достоверную информацию о своих персональных данных и своевременно обновлять её в случае изменений.</p>
+                <p>Администрация сайта обязуется:</p>
+                <ul>
+                    <li>Использовать полученную информацию исключительно для целей, указанных в п. 3</li>
+                    <li>Обеспечить хранение конфиденциальной информации в тайне, не разглашать без предварительного письменного разрешения пользователя</li>
+                    <li>Не осуществлять продажу, обмен, опубликование переданных персональных данных</li>
+                </ul>
+
+                <div class="section-title">6. ОТВЕТСТВЕННОСТЬ</div>
+                <p>Администрация сайта несёт ответственность за убытки, понесённые пользователем в связи с неправомерным использованием персональных данных, в соответствии с законодательством Российской Федерации.</p>
+                <p>Администрация сайта не несёт ответственности в случае, если конфиденциальная информация:</p>
+                <ul>
+                    <li>Стала публичным достоянием до её утраты или разглашения</li>
+                    <li>Была получена от третьей стороны до момента её получения администрацией</li>
+                    <li>Была разглашена с согласия пользователя</li>
+                </ul>
+
+                <div class="section-title">7. РАЗРЕШЕНИЕ СПОРОВ</div>
+                <p>До обращения в суд с иском по спорам, возникающим из отношений между пользователем и администрацией, обязательным является предъявление претензии.</p>
+                <p>Срок рассмотрения претензии — 30 календарных дней со дня получения.</p>
+                <p>При не достижении соглашения спор передаётся на рассмотрение в судебный орган в соответствии с действующим законодательством РФ.</p>
+
+                <div class="section-title">8. ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЯ</div>
+                <p>Администрация сайта вправе вносить изменения в настоящую Политику конфиденциальности без согласия пользователя.</p>
+                <p>Новая редакция Политики вступает в силу с момента её размещения на сайте.</p>
+
+                <p style="margin-top:20px; font-style:italic; color:var(--text-gray);">Дата последнего обновления: 24 августа 2026 г.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const API_BASE = 'https://bakhtereva-backend.onrender.com';
+        // ==============================================
+        //  ★★★ НАСТРОЙТЕ ЭТУ ПЕРЕМЕННУЮ ★★★
+        //  Вставьте URL вашего бэкенда на Render
+        // ==============================================
+        const API_BASE = 'https://bakhtereva-backend.onrender.com'; // замените на реальный
 
         // ==============================================
         //  ДАННЫЕ СТАТЕЙ
@@ -1975,6 +2250,35 @@
         });
 
         // ==============================================
+        //  ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (открытие модалки)
+        // ==============================================
+        const policyModal = document.getElementById('policyModal');
+        const policyModalClose = document.getElementById('policyModalClose');
+        const openPolicyLink = document.getElementById('openPolicyLink');
+
+        function openPolicyModal(e) {
+            e.preventDefault();
+            policyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicyModal() {
+            policyModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        openPolicyLink.addEventListener('click', openPolicyModal);
+        policyModalClose.addEventListener('click', closePolicyModal);
+        policyModal.addEventListener('click', (e) => {
+            if (e.target === policyModal) closePolicyModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && policyModal.classList.contains('active')) {
+                closePolicyModal();
+            }
+        });
+
+        // ==============================================
         //  КАЛЕНДАРЬ И ЗАПИСЬ
         // ==============================================
         let currentDate = new Date();
@@ -2098,6 +2402,8 @@
 
         const bookingForm = document.getElementById('bookingForm');
         const formStatus = document.getElementById('formStatus');
+        const consentCheckbox = document.getElementById('consent');
+        const consentError = document.getElementById('consentError');
 
         bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -2106,6 +2412,13 @@
             const phone = document.getElementById('phone').value.trim();
             const email = document.getElementById('email').value.trim();
             const time = document.getElementById('time').value;
+
+            // Проверка согласия
+            consentError.classList.remove('visible');
+            if (!consentCheckbox.checked) {
+                consentError.classList.add('visible');
+                return;
+            }
 
             if (!selectedDate || !time) {
                 formStatus.style.display = 'block';
@@ -2156,6 +2469,7 @@
                     formStatus.textContent = '✅ Запись успешно создана! Я свяжусь с вами.';
                     formStatus.style.color = '#38A169';
                     bookingForm.reset();
+                    consentCheckbox.checked = false;
                     document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
                     selectedDate = null;
                     document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
@@ -2195,6 +2509,8 @@
             document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
             document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
             formStatus.style.display = 'none';
+            consentError.classList.remove('visible');
+            consentCheckbox.checked = false;
             // По умолчанию выбираем онлайн
             formatOptions.forEach(el => el.classList.remove('selected'));
             document.querySelector('.format-option[data-format="online"]').classList.add('selected');
@@ -2242,6 +2558,32 @@
             if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
                 closeModal();
             }
+        });
+
+        // ==============================================
+        //  УПРАВЛЕНИЕ ОТОБРАЖЕНИЕМ КУРСОВ (листалка)
+        // ==============================================
+        const eduQualGrid = document.getElementById('eduQualGrid');
+        const eduQualToggle = document.getElementById('eduQualToggle');
+        let allQualCards = eduQualGrid.querySelectorAll('.edu-card');
+        let maxVisible = 6;
+
+        // Изначально скрываем все карточки после 6-й
+        allQualCards.forEach((card, index) => {
+            if (index >= maxVisible) {
+                card.classList.add('hidden-extra');
+            }
+        });
+
+        let allVisible = false;
+        eduQualToggle.addEventListener('click', function() {
+            allVisible = !allVisible;
+            allQualCards.forEach((card, index) => {
+                if (index >= maxVisible) {
+                    card.classList.toggle('hidden-extra');
+                }
+            });
+            this.textContent = allVisible ? 'Свернуть курсы' : 'Показать все курсы';
         });
     </script>
 </body>
