@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Невролог Бахтерева Елена Владимировна | Приём и консультации</title>
     <meta name="description" content="Врач-невролог, доктор медицинских наук Бахтерева Елена Владимировна. Лечение головной боли, болей в спине, головокружений. Онлайн-информирование. Запись на приём." />
-    <!-- <link rel="icon" type="image/x-icon" href="favicon.jpg" /> -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
@@ -154,19 +153,21 @@
         .nav {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
         }
         .nav a {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-dark);
             transition: color var(--transition);
+            white-space: nowrap;
         }
         .nav a:hover {
             color: var(--primary-blue);
         }
         .nav .btn-primary {
-            padding: 12px 28px;
-            font-size: 16px;
+            padding: 10px 24px;
+            font-size: 15px;
+            white-space: nowrap;
         }
         .burger {
             display: none;
@@ -341,7 +342,6 @@
             margin-top: 2px;
         }
 
-        /* скрытые курсы */
         .edu-card.hidden-extra {
             display: none;
         }
@@ -364,6 +364,74 @@
         }
         .edu-group .show-more-btn:focus {
             outline: none;
+        }
+
+        /* ===== НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ ===== */
+        .science-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .science-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition), box-shadow var(--transition);
+            border: 1px solid #f0f4f8;
+            display: flex;
+            flex-direction: column;
+        }
+        .science-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+        .science-card .icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .science-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .science-card p {
+            font-size: 16px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        .science-card ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-top: 8px;
+            font-size: 15px;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .science-card ul li {
+            margin-bottom: 4px;
+        }
+        .science-card .badge {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 8px;
+            align-self: flex-start;
+        }
+        .science-card .full-list {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
+        .science-full {
+            grid-column: 1 / -1;
         }
 
         .comp-grid {
@@ -1130,6 +1198,9 @@
             .formats-grid {
                 gap: 20px;
             }
+            .science-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1151,16 +1222,17 @@
             .nav {
                 display: none;
                 flex-direction: column;
-                gap: 20px;
+                gap: 16px;
                 background: var(--white);
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                padding: 24px 20px;
+                padding: 20px 20px;
                 border-bottom: 1px solid #E2E8F0;
                 box-shadow: var(--shadow);
                 width: 100%;
+                z-index: 999;
             }
             .nav.open {
                 display: flex;
@@ -1197,6 +1269,9 @@
             }
             .edu-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+            .science-grid {
+                grid-template-columns: 1fr;
             }
             .contacts-grid {
                 grid-template-columns: 1fr;
@@ -1291,6 +1366,9 @@
             .edu-grid {
                 grid-template-columns: 1fr;
             }
+            .science-card {
+                padding: 20px 16px;
+            }
         }
     </style>
 </head>
@@ -1305,12 +1383,10 @@
             <nav class="nav" id="mainNav">
                 <a href="#about">Обо мне</a>
                 <a href="#education">Образование</a>
+                <a href="#science">Научная деятельность</a>
                 <a href="#competencies">Компетенции</a>
-                <a href="#advantages">Преимущества</a>
                 <a href="#formats">Форматы</a>
-                <a href="#blog">Блог</a>
                 <a href="#reviews">Отзывы</a>
-                <a href="#faq">Вопросы</a>
                 <a href="#contacts">Контакты</a>
                 <button class="btn-primary open-modal-btn">Записаться</button>
             </nav>
@@ -1347,10 +1423,13 @@
                     <p>Моя специализация — диагностика и лечение <strong>головной боли</strong>, <strong>болей в спине</strong>, <strong>головокружений</strong>, <strong>вегетативных расстройств</strong>, <strong>последствий инсультов</strong> и других неврологических заболеваний.</p>
                     <p>Каждая консультация проходит в комфортном темпе, без спешки, чтобы мы могли детально разобрать вашу ситуацию и назначить оптимальную терапию.</p>
                     <p>Мой подход основан на принципах доказательной медицины и международных клинических рекомендациях. Я постоянно повышаю квалификацию, участвую в научных конференциях, публикую статьи в рецензируемых журналах.</p>
+                    <p>Являюсь автором более <strong>100 печатных работ</strong>, <strong>9 патентов</strong> по диагностике, лечению и реабилитации. Участвую в разработке федеральных клинических рекомендаций по профессиональным заболеваниям нервной системы.</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat"><span>26</span> лет стажа</div>
                     <div class="stat"><span>Д.м.н.</span> — доктор медицинских наук</div>
+                    <div class="stat"><span>100+</span> печатных работ</div>
+                    <div class="stat"><span>9</span> патентов</div>
                 </div>
             </div>
         </div>
@@ -1447,7 +1526,6 @@
                     Образование
                 </div>
                 <div class="edu-grid">
-                    <!-- Сортировка по дате: от новых к старым (сначала 1998-2000, потом 1992-1998) -->
                     <div class="edu-card">
                         <div class="title">Клиническая ординатура (неврология)</div>
                         <div class="year">1998–2000</div>
@@ -1468,7 +1546,6 @@
                     Повышение квалификации
                 </div>
                 <div class="edu-grid" id="eduQualGrid">
-                    <!-- Сортировка по году: от новых к старым -->
                     <div class="edu-card">
                         <div class="title">Хроническая боль как междисциплинарная проблема</div>
                         <div class="year">2025</div>
@@ -1495,11 +1572,6 @@
                         <div class="org">РМАНПО, г. Москва</div>
                     </div>
                     <div class="edu-card">
-                        <div class="title">GCP (Good Clinical Practice)</div>
-                        <div class="year">2023</div>
-                        <div class="org">Сертификат на проведение клинических исследований</div>
-                    </div>
-                    <div class="edu-card">
                         <div class="title">Клиническая нейрофизиология</div>
                         <div class="year">2023</div>
                         <div class="org">г. Санкт-Петербург</div>
@@ -1515,11 +1587,6 @@
                         <div class="org">Российский центр неврологии и нейронаук, г. Москва</div>
                     </div>
                     <div class="edu-card">
-                        <div class="title">Профпатология</div>
-                        <div class="year">2020</div>
-                        <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
-                    </div>
-                    <div class="edu-card">
                         <div class="title">Неврология</div>
                         <div class="year">2019</div>
                         <div class="org">АНО ВО "Европейский Университет"</div>
@@ -1530,9 +1597,19 @@
                         <div class="org">ФГБОУ ВО УГМУ Минздрава РФ</div>
                     </div>
                     <div class="edu-card">
+                        <div class="title">Профпатология</div>
+                        <div class="year">2020</div>
+                        <div class="org">ФБУН ЕМНЦ ПОЗРПП</div>
+                    </div>
+                    <div class="edu-card">
                         <div class="title">Физиотерапия</div>
                         <div class="year">2005</div>
                         <div class="org">УГМА, кафедра физиотерапии</div>
+                    </div>
+                    <div class="edu-card">
+                        <div class="title">GCP (Good Clinical Practice)</div>
+                        <div class="year">2023</div>
+                        <div class="org">Сертификат на проведение клинических исследований</div>
                     </div>
                 </div>
                 <button class="show-more-btn" id="eduQualToggle">Показать все курсы</button>
@@ -1540,8 +1617,57 @@
         </div>
     </section>
 
+    <!-- ===== НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ ===== -->
+    <section id="science" class="bg-light">
+        <div class="container">
+            <h2 class="section-title centered">Научная деятельность и профессиональные достижения</h2>
+            <div class="science-grid">
+                <!-- Публикации -->
+                <div class="science-card">
+                    <div class="icon">📄</div>
+                    <h3>Публикации</h3>
+                    <p>Автор более <strong>100 печатных работ</strong> в рецензируемых научных журналах по неврологии, нейрофизиологии и профессиональной патологии.</p>
+                </div>
+                <!-- Патенты -->
+                <div class="science-card">
+                    <div class="icon">💡</div>
+                    <h3>Патенты</h3>
+                    <p>Обладатель <strong>9 патентов</strong> на изобретения в области диагностики, лечения и реабилитации неврологических заболеваний.</p>
+                </div>
+                <!-- Клинические рекомендации -->
+                <div class="science-card science-full">
+                    <div class="icon">📋</div>
+                    <h3>Клинические рекомендации федерального уровня</h3>
+                    <p>Член рабочей группы по разработке клинических рекомендаций:</p>
+                    <ul>
+                        <li>Профессиональная пояснично-крестцовая радикулопатия</li>
+                        <li>Профессиональные дорсопатии</li>
+                        <li>Вибрационная болезнь</li>
+                    </ul>
+                    <span class="badge">Федеральный уровень</span>
+                </div>
+                <!-- Конгрессы и конференции -->
+                <div class="science-card science-full">
+                    <div class="icon">🌍</div>
+                    <h3>Участие в конгрессах и конференциях</h3>
+                    <p>Участник и докладчик на российских и международных научных форумах:</p>
+                    <ul>
+                        <li>Конгресс неврологов Урала «Шеферовские чтения»</li>
+                        <li>Вейновские чтения</li>
+                        <li>Гигиена и предиктивная медицина</li>
+                        <li>Медицинская реабилитация</li>
+                        <li>Мануальная медицина Урала</li>
+                        <li>Всемирный конгресс по неврологии</li>
+                        <li>Всемирный конгресс по боли</li>
+                        <li>Европейский конгресс по неврологии</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== COMPETENCIES ===== -->
-    <section id="competencies" class="bg-light">
+    <section id="competencies">
         <div class="container">
             <h2 class="section-title centered">Специализируюсь на диагностике и лечении</h2>
             <div class="comp-grid">
@@ -1558,7 +1684,7 @@
     </section>
 
     <!-- ===== BLOG ===== -->
-    <section id="blog">
+    <section id="blog" class="bg-light">
         <div class="container">
             <h2 class="section-title centered">Полезные статьи о здоровье</h2>
             <div class="blog-grid" id="blogGrid">
@@ -1568,7 +1694,7 @@
     </section>
 
     <!-- ===== ОТЗЫВЫ (АККОРДЕОН) ===== -->
-    <section id="reviews" class="bg-light">
+    <section id="reviews">
         <div class="container">
             <h2 class="section-title centered">Отзывы пациентов</h2>
             <div class="reviews-list" id="reviewsList">
@@ -1953,17 +2079,13 @@
                 <p>Администрация сайта вправе вносить изменения в настоящую Политику конфиденциальности без согласия пользователя.</p>
                 <p>Новая редакция Политики вступает в силу с момента её размещения на сайте.</p>
 
-                <p style="margin-top:20px; font-style:italic; color:var(--text-gray);">Дата последнего обновления: 24 августа 2026 г.</p>
+                <p style="margin-top:20px; font-style:italic; color:var(--text-gray);">Дата последнего обновления: 26 августа 2026 г.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // ==============================================
-        //  ★★★ НАСТРОЙТЕ ЭТУ ПЕРЕМЕННУЮ ★★★
-        //  Вставьте URL вашего бэкенда на Render
-        // ==============================================
-        const API_BASE = 'https://bakhtereva-backend.onrender.com'; // замените на реальный
+        const API_BASE = 'https://bakhtereva-backend.onrender.com';
 
         // ==============================================
         //  ДАННЫЕ СТАТЕЙ
