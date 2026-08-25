@@ -2002,6 +2002,7 @@
                     </div>
                     <div class="calendar-grid" id="calendarGrid"></div>
                     <div class="calendar-timezone-note">⏰ Все время указано по <strong>Екатеринбургу (UTC+5)</strong></div>
+                    <div class="availability-hint" id="availabilityHint" style="font-size:15px; color:var(--primary-dark); background:#EBF4FF; padding:8px 12px; border-radius:6px; margin-top:8px;"></div>
                 </div>
 
                 <!-- Выбор времени -->
@@ -2401,6 +2402,13 @@
                 formatOptions.forEach(el => el.classList.remove('selected'));
                 this.classList.add('selected');
                 consultationTypeInput.value = this.dataset.format;
+                updateAvailabilityHint();
+                // Сброс выбранной даты и времени
+                selectedDate = null;
+                document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
+                document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
+                // Перерисовка календаря
+                renderCalendar(currentDate);
             });
         });
 
@@ -2689,10 +2697,7 @@
             formStatus.style.display = 'none';
             consentError.classList.remove('visible');
             consentCheckbox.checked = false;
-            // По умолчанию выбираем онлайн
-            formatOptions.forEach(el => el.classList.remove('selected'));
-            document.querySelector('.format-option[data-format="online"]').classList.add('selected');
-            consultationTypeInput.value = 'online';
+            // Сброс способа связи на Telegram
             contactOptions.forEach(el => el.classList.remove('selected'));
             document.querySelector('.contact-option[data-method="telegram"]').classList.add('selected');
             contactMethodInput.value = 'telegram';
@@ -2700,6 +2705,10 @@
             const emailLabel = emailField.closest('.form-group').querySelector('label');
             emailLabel.innerHTML = 'Email (для подтверждения)';
             emailField.required = false;
+            // Обновляем подсказку
+            updateAvailabilityHint();
+            // Перерисовываем календарь
+            renderCalendar(currentDate);
         }
 
         function closeModal() {
@@ -2713,17 +2722,25 @@
                 e.preventDefault();
                 const format = btn.dataset.format;
                 if (format) {
-                    // Устанавливаем нужный формат в переключателе
+                    // Устанавливаем нужный формат
                     formatOptions.forEach(el => {
                         el.classList.toggle('selected', el.dataset.format === format);
                     });
                     consultationTypeInput.value = format;
+                    updateAvailabilityHint();
+                    selectedDate = null;
+                    document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
+                    document.getElementById('time').innerHTML = '<option value="">— выберите дату сначала —</option>';
+                    renderCalendar(currentDate);
                 } else {
-                    // Иначе по умолчанию онлайн
+                    // Без формата (шапка, герой, CTA) — ставим онлайн по умолчанию
                     formatOptions.forEach(el => el.classList.remove('selected'));
                     document.querySelector('.format-option[data-format="online"]').classList.add('selected');
                     consultationTypeInput.value = 'online';
+                    updateAvailabilityHint();
+                    renderCalendar(currentDate);
                 }
+                // Открываем модалку (ВНЕ УСЛОВИЙ!)
                 openModal();
             });
         });
@@ -2763,6 +2780,28 @@
             });
             this.textContent = allVisible ? 'Свернуть курсы' : 'Показать все курсы';
         });
+        function getAvailabilityHint(consultationType) {
+            if (consultationType === 'online') {
+                return 'Онлайн-консультации проводятся по субботам в 18:00 и 19:00. Выберите другую дату.';
+            } else if (consultationType === 'offline') {
+                return 'Очный приём проводится по воскресеньям в 17:30 и 18:30. Выберите другую дату.';
+            } else {
+                return 'В этот день консультации не проводятся.';
+            }
+        }
+
+        function updateAvailabilityHint() {
+            const hintEl = document.getElementById('availabilityHint');
+            if (!hintEl) return;
+            const consultationType = consultationTypeInput.value;
+            if (consultationType === 'online') {
+                hintEl.textContent = '💻 Онлайн-консультации доступны по субботам в 18:00 и 19:00 (по Екатеринбургу).';
+            } else if (consultationType === 'offline') {
+                hintEl.textContent = '🏥 Очный приём доступен по воскресеньям в 17:30 и 18:30 (по Екатеринбургу).';
+            } else {
+                hintEl.textContent = '';
+            }
+        }
     </script>
 </body>
 </html>
