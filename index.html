@@ -2519,10 +2519,10 @@
                 if (cellDate < today) {
                     isDisabled = true;
                 } else {
-                    const weekday = cellDate.getDay(); // 0-вс, 6-сб
-                    if (consultationType === 'online' && weekday !== 6) {
+                    const weekday = cellDate.getDay(); // 0-пн, 6-вс
+                    if (consultationType === 'online' && weekday !== 0) { // воскресенье
                         isDisabled = true;
-                    } else if (consultationType === 'offline' && weekday !== 0) {
+                    } else if (consultationType === 'offline' && weekday !== 1) { // понедельник
                         isDisabled = true;
                     }
                 }
@@ -2798,9 +2798,9 @@
         });
         function getAvailabilityHint(consultationType) {
             if (consultationType === 'online') {
-                return 'Онлайн-консультации проводятся по субботам в 18:00 и 19:00. Выберите другую дату.';
+                return 'Онлайн-консультации проводятся по воскресеньям в 18:00 и 19:00. Выберите другую дату.';
             } else if (consultationType === 'offline') {
-                return 'Очный приём проводится по воскресеньям в 17:30 и 18:30. Выберите другую дату.';
+                return 'Очный приём проводится по понедельникам в 17:30 и 18:30. Выберите другую дату.';
             } else {
                 return 'В этот день консультации не проводятся.';
             }
@@ -2811,9 +2811,9 @@
             if (!hintEl) return;
             const consultationType = consultationTypeInput.value;
             if (consultationType === 'online') {
-                hintEl.textContent = '💻 Онлайн-консультации доступны по субботам в 18:00 и 19:00 (по Екатеринбургу).';
+                hintEl.textContent = '💻 Онлайн-консультации доступны по воскресеньям в 18:00 и 19:00 (по Екатеринбургу). Длительность – 40 минут.';
             } else if (consultationType === 'offline') {
-                hintEl.textContent = '🏥 Очный приём доступен по воскресеньям в 17:30 и 18:30 (по Екатеринбургу).';
+                hintEl.textContent = '🏥 Очный приём доступен по понедельникам в 17:30 и 18:30 (по Екатеринбургу). Длительность – 60 минут.';
             } else {
                 hintEl.textContent = '';
             }
