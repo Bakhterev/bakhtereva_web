@@ -2534,7 +2534,9 @@
                         document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
                         div.classList.add('selected');
                         selectedDate = new Date(year, month, i);
-                        fetchAvailableSlots(selectedDate);
+                        // remove
+                        console.log('📅 Клик по дате, consultationTypeInput.value перед fetch:', consultationTypeInput.value);
+                        fetchAvailableSlots(selectedDate, consultationTypeInput.value);
                     });
                 }
 
@@ -2551,7 +2553,7 @@
             }
         }
 
-        async function fetchAvailableSlots(date) {
+        async function fetchAvailableSlots(date, consultationType) {
             const timeSelect = document.getElementById('time');
             const formStatus = document.getElementById('formStatus');
             timeSelect.innerHTML = '<option value="">Загрузка...</option>';
@@ -2563,7 +2565,8 @@
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
                 const formattedDate = `${year}-${month}-${day}`;
-                const url = `${API_BASE}/slots?date=${formattedDate}&_=${Date.now()}`;
+                // ★ Используем переданный consultationType, а не глобальную переменную
+                const url = `${API_BASE}/slots?date=${formattedDate}&consultation_type=${consultationType}&_=${Date.now()}`;
                 console.log('📤 Запрос к бэкенду:', url);
 
                 const response = await fetch(url);
@@ -2576,7 +2579,8 @@
 
                 timeSelect.innerHTML = '<option value="">— выберите время —</option>';
                 if (slots.length === 0) {
-                    timeSelect.innerHTML = '<option value="">Нет свободных слотов</option>';
+                    const hint = getAvailabilityHint(consultationType);
+                    timeSelect.innerHTML = `<option value="">${hint}</option>`;
                 } else {
                     slots.forEach(slot => {
                         const option = document.createElement('option');
