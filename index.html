@@ -2505,6 +2505,8 @@
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
+            const consultationType = consultationTypeInput.value;
+
             for (let i = 1; i <= daysInMonth; i++) {
                 const div = document.createElement('div');
                 div.className = 'day';
@@ -2512,7 +2514,20 @@
 
                 const cellDate = new Date(year, month, i);
                 cellDate.setHours(0, 0, 0, 0);
+
+                let isDisabled = false;
                 if (cellDate < today) {
+                    isDisabled = true;
+                } else {
+                    const weekday = cellDate.getDay(); // 0-вс, 6-сб
+                    if (consultationType === 'online' && weekday !== 6) {
+                        isDisabled = true;
+                    } else if (consultationType === 'offline' && weekday !== 0) {
+                        isDisabled = true;
+                    }
+                }
+
+                if (isDisabled) {
                     div.classList.add('disabled');
                 } else {
                     div.addEventListener('click', () => {
@@ -2522,6 +2537,7 @@
                         fetchAvailableSlots(selectedDate);
                     });
                 }
+
                 grid.appendChild(div);
             }
 
