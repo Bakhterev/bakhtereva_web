@@ -2537,8 +2537,6 @@
                         document.querySelectorAll('.day.selected').forEach(el => el.classList.remove('selected'));
                         div.classList.add('selected');
                         selectedDate = new Date(year, month, i);
-                        // remove
-                        console.log('📅 Клик по дате, consultationTypeInput.value перед fetch:', consultationTypeInput.value);
                         fetchAvailableSlots(selectedDate, consultationTypeInput.value);
                     });
                 }
